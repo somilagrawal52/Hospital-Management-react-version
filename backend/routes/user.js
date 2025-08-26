@@ -22,8 +22,13 @@ const {
   doctorsloginpage,
   doctorloginfromdb,
   doctorlogout,
+  DoctorProfile,
+  UpdateDoctorProfile,
+  appointmentComplete,
+  appointmentCancel,
   changeAvailability,
-  Doctorappointmentdetailtable
+  Doctorappointmentdetailtable,
+  doctorDashboard
 } = require("../controller/doctor");
 const {
   doctors,
@@ -65,6 +70,12 @@ const upload = multer({ storage: storage });
 
 router.post("/admin/login", adminloginfromdb);
 
+router.post("/doctor-profile", DoctorProfile);
+
+router.post("/update-doctor-profile", upload.single('image'), checkforauthentication(), UpdateDoctorProfile);
+
+router.get("/dashboard-doctor", doctorDashboard);
+
 router.get("/logout", adminlogout);
 
 router.get("/doctorlogout", doctorlogout);
@@ -75,6 +86,10 @@ router.get(
   restrictTo(["ADMIN"]),
   doctorsregistration
 );
+
+router.post("/appointment-complete", restrictTo(["DOCTOR"]), checkforauthentication(), appointmentComplete);
+
+router.post("/appointment-cancel", restrictTo(["DOCTOR"]), checkforauthentication(), appointmentCancel);
 
 router.get("/doctor-appointments", restrictTo(["DOCTOR"]), checkforauthentication(), Doctorappointmentdetailtable);
 

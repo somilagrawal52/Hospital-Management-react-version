@@ -48,6 +48,7 @@ app.get(
   restrictTo(["ADMIN"]),
   (req, res) => {
     res.json({ status: "admin access granted" });
+    return res.redirect("/admin-dashboard");
   }
 );
 

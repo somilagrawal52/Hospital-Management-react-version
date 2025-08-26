@@ -4,7 +4,7 @@ import { assets } from '../../assets_admin/assets'
 import { DoctorContext } from '../../context/DoctorContext'
 const DoctorAppointments = () => {
 
-    const { dToken, appointments, fetchAppointments } = useContext(DoctorContext);
+    const { dToken, appointments, fetchAppointments, completeAppointment, cancelAppointment } = useContext(DoctorContext);
 
     useEffect(() => {
         if(dToken) {
@@ -40,10 +40,14 @@ const DoctorAppointments = () => {
                     <p>{item.age}</p>
                     <p>{item.slotDate},{item.slotTime}</p>
                     <p>{item.fee}</p>
-                    <div>
-                        <img src={assets.cancel_icon} alt="" />
-                        <img src={assets.tick_icon} alt="" />
+                    {
+                        item.cancelled?<p>Cancelled</p>:
+                        item.completed?<p>Completed</p>:<div>
+                        <img onClick={() => cancelAppointment(item._id)} src={assets.cancel_icon} alt="" />
+                        <img onClick={() => completeAppointment(item._id)} src={assets.tick_icon} alt="" />
                     </div>
+                    }
+                    
                 </div>
             })
         }

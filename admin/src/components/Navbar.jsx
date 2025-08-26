@@ -1,10 +1,15 @@
 import  { useContext } from 'react'
 import { AdminContext } from '../context/AdminContext'
+import {DoctorContext} from '../context/DoctorContext'
 import{assets} from '../assets_admin/assets'
 const Navbar = () => {
     const {token,setToken}=useContext(AdminContext)
+    const {dToken,setDToken}=useContext(DoctorContext)
     const  logout = () =>{
         token && setToken('')
+        token && localStorage.removeItem('token')
+        dToken && setDToken('')
+        dToken && localStorage.removeItem('dToken')
     }
   return (
     <div className='flex items-center justify-between px-4 py-3 bg-white border-b sm:px-10'>
